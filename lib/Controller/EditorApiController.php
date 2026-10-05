@@ -53,6 +53,7 @@ use OCP\IURLGenerator;
 use OCP\IUser;
 use OCP\IUserManager;
 use OCP\IUserSession;
+use OCP\L10N\IFactory;
 use OCP\PreConditionNotMetException;
 use OCP\Server;
 use OCP\Share\IShare;
@@ -85,7 +86,8 @@ class EditorApiController extends OCSController {
         private readonly TimezoneService $timezoneService,
         private readonly FileUtility $fileUtility,
         private readonly IAvatarManager $avatarManager,
-        private readonly ExtraPermissions $extraPermissions
+        private readonly ExtraPermissions $extraPermissions,
+        private readonly IFactory $l10nFactory
     ) {
         parent::__construct($appName, $request);
     }
@@ -200,7 +202,7 @@ class EditorApiController extends OCSController {
             ],
             "documentType" => $format["type"],
             "editorConfig" => [
-                "lang" => str_replace("_", "-", $this->trans->getLanguageCode()),
+                "lang" => str_replace("_", "-", $this->l10nFactory->findLanguage()),
                 "region" => str_replace("_", "-", $this->trans->getLocaleCode())
             ]
         ];
